@@ -1,0 +1,40 @@
+# ============================================================
+# AtmosMetrics — .gitignore
+# ============================================================
+
+# --- Segurança: NUNCA subir arquivos de ambiente ---
+.env
+.env.local
+.env.*.local
+
+# --- Docker volumes e dados persistidos localmente ---
+pgdata/
+
+# --- Sistemas Operacionais ---
+.DS_Store
+Thumbs.db
+
+# --- IDEs e Editores ---
+.vscode/
+.idea/
+*.suo
+*.user
+
+# --- Python (para o futuro ETL) ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+*.egg-info/
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Frontend (Node.js / Vite) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/

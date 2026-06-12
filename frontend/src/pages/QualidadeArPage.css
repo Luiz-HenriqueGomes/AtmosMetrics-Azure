@@ -1,0 +1,457 @@
+/* ============================================================
+   AtmosMetrics — Qualidade do Ar (AQI) Styles
+   ============================================================ */
+
+.aqi-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header & Filters */
+.aqi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.aqi-title-section h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #10b981, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.aqi-title-section p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Filters (reused from focos) */
+.aqi-filters {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.aqi-filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.aqi-filter-group label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.aqi-filter-group select,
+.aqi-filter-group input {
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+  min-width: 140px;
+}
+
+.btn-filter {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+  height: 36px;
+  margin-top: auto;
+}
+
+.btn-filter:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* KPIs Topo */
+.aqi-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.aqi-kpi-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.aqi-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.kpi-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-global { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.icon-worst { background: rgba(159, 18, 57, 0.15); color: #f43f5e; }
+.icon-best { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+.kpi-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Interactive Map Container */
+/* Layout Mapa + Sidebar */
+.aqi-content-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .aqi-content-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aqi-map-container {
+  height: 450px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-elevated);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  position: relative;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.aqi-map-container .leaflet-container {
+  height: 100%;
+  width: 100%;
+  background: #0f172a;
+}
+
+/* Painel Explicativo Lateral */
+.aqi-info-sidebar {
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  height: 450px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.aqi-info-sidebar::-webkit-scrollbar { width: 5px; }
+.aqi-info-sidebar::-webkit-scrollbar-track { background: transparent; }
+.aqi-info-sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+
+.aqi-info-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 0.75rem;
+}
+
+.aqi-info-block {
+  background: var(--bg-card);
+  border-radius: 6px;
+  padding: 0.75rem;
+  border-left: 3px solid #3b82f6;
+}
+
+.aqi-info-block h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.aqi-info-block p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.aqi-info-block.color-pm25 { border-left-color: #ef4444; }
+.aqi-info-block.color-pm10 { border-left-color: #f59e0b; }
+.aqi-info-block.color-o3 { border-left-color: #10b981; }
+.aqi-info-block.color-co { border-left-color: #8b5cf6; }
+
+
+
+/* Dicionário/Legenda (IQAir Style) */
+.aqi-map-legend {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.legend-item {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 768px) {
+  .aqi-map-legend {
+    flex-wrap: wrap;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    justify-content: center;
+  }
+  .legend-item {
+    flex: 1 1 auto;
+    font-size: 10px;
+    padding: 4px;
+  }
+}
+
+/* Bento Grid */
+.aqi-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+.aqi-bento-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Escala de Cores AQI (Padrão EPA) */
+.aqi-good { color: #10b981; }       /* 0-50 */
+.aqi-moderate { color: #facc15; }   /* 51-100 */
+.aqi-sensitive { color: #f97316; }  /* 101-150 */
+.aqi-unhealthy { color: #ef4444; }  /* 151-200 */
+.aqi-very { color: #8b5cf6; }       /* 201-300 */
+.aqi-hazardous { color: #9f1239; }  /* 300+ */
+
+/* Theme borders for Bento Card based on worst AQI inside it */
+.theme-aqi-good { box-shadow: inset 0 2px 0 0 rgba(16, 185, 129, 0.5); }
+.theme-aqi-moderate { box-shadow: inset 0 2px 0 0 rgba(250, 204, 21, 0.5); }
+.theme-aqi-sensitive { box-shadow: inset 0 2px 0 0 rgba(249, 115, 22, 0.5); }
+.theme-aqi-unhealthy { box-shadow: inset 0 2px 0 0 rgba(239, 68, 68, 0.5); }
+.theme-aqi-very { box-shadow: inset 0 2px 0 0 rgba(139, 92, 246, 0.5); }
+.theme-aqi-hazardous { box-shadow: inset 0 2px 0 0 rgba(159, 18, 57, 0.5); }
+
+.aqi-bento-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.aqi-bento-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.aqi-bento-country {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.aqi-bento-badge {
+  background: rgba(255,255,255,0.05);
+  padding: 0.2rem 0.5rem;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.aqi-bento-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  max-height: 280px; /* Limita a altura máxima */
+  overflow-y: auto; /* Adiciona scroll interno */
+  padding-right: 0.5rem; /* Espaço para o scrollbar não colar no texto */
+}
+
+/* Scrollbar estilizada (fina e escura) */
+.aqi-bento-card-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.aqi-bento-card-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.aqi-bento-card-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.aqi-bento-card-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.aqi-city-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.aqi-city-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.aqi-city-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aqi-city-name {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 65%;
+}
+
+.aqi-val {
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.aqi-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.bg-aqi-good { background: #10b981; }
+.bg-aqi-moderate { background: #facc15; color: #000; }
+.bg-aqi-sensitive { background: #f97316; }
+.bg-aqi-unhealthy { background: #ef4444; }
+.bg-aqi-very { background: #8b5cf6; }
+.bg-aqi-hazardous { background: #9f1239; }
+
+/* Barra de Progresso do AQI */
+.aqi-bar-bg {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.aqi-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fill-aqi-good { background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
+.fill-aqi-moderate { background: #facc15; box-shadow: 0 0 8px rgba(250, 204, 21, 0.5); }
+.fill-aqi-sensitive { background: #f97316; box-shadow: 0 0 8px rgba(249, 115, 22, 0.5); }
+.fill-aqi-unhealthy { background: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); }
+.fill-aqi-very { background: #8b5cf6; box-shadow: 0 0 8px rgba(139, 92, 246, 0.5); }
+.fill-aqi-hazardous { background: #9f1239; box-shadow: 0 0 8px rgba(159, 18, 57, 0.5); }
+
+/* Detalhes de PM2.5 etc */
+.aqi-city-details {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.aqi-city-details span {
+  background: rgba(255,255,255,0.03);
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+/* Staggered Animations */
+.aqi-bento-grid > div:nth-child(1) { animation-delay: 0.05s; }
+.aqi-bento-grid > div:nth-child(2) { animation-delay: 0.10s; }
+.aqi-bento-grid > div:nth-child(3) { animation-delay: 0.15s; }
+.aqi-bento-grid > div:nth-child(4) { animation-delay: 0.20s; }
+.aqi-bento-grid > div:nth-child(5) { animation-delay: 0.25s; }
+.aqi-bento-grid > div:nth-child(6) { animation-delay: 0.30s; }
