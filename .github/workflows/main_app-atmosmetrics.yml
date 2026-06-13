@@ -64,7 +64,7 @@ jobs:
           app-name: 'app-atmosmetrics'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: .
+          package: backend
           # startup-command NAO funciona com publish profile auth.
           # Configure o Startup Command diretamente no Azure Portal:
           # App Service > Configuracao > Configuracoes Gerais > Comando de Inicializacao:
