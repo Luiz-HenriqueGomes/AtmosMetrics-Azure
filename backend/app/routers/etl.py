@@ -109,6 +109,66 @@ def executar_clima_sync(
     localidades com coordenadas de referência. Não requer API key.
     """
     from etl.openmeteo_etl import executar_pipeline_clima
+    from app.models.dim_localidade import DimLocalidade
+
+    # Cadastra as 27 referências estaduais do Brasil para ter dados de clima no mapa
+    estados_brasil = [
+        {"estado": "AC", "nome": "Acre", "lat": -9.97, "lon": -67.81, "regiao": "Norte", "bioma": "Amazônia"},
+        {"estado": "AL", "nome": "Alagoas", "lat": -9.66, "lon": -35.73, "regiao": "Nordeste", "bioma": "Mata Atlântica"},
+        {"estado": "AP", "nome": "Amapá", "lat": 0.03, "lon": -51.06, "regiao": "Norte", "bioma": "Amazônia"},
+        {"estado": "AM", "nome": "Amazonas", "lat": -3.10, "lon": -60.02, "regiao": "Norte", "bioma": "Amazônia"},
+        {"estado": "BA", "nome": "Bahia", "lat": -12.97, "lon": -38.51, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "CE", "nome": "Ceará", "lat": -3.71, "lon": -38.54, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "DF", "nome": "Distrito Federal", "lat": -15.78, "lon": -47.93, "regiao": "Centro-Oeste", "bioma": "Cerrado"},
+        {"estado": "ES", "nome": "Espírito Santo", "lat": -20.31, "lon": -40.31, "regiao": "Sudeste", "bioma": "Mata Atlântica"},
+        {"estado": "GO", "nome": "Goiás", "lat": -16.68, "lon": -49.25, "regiao": "Centro-Oeste", "bioma": "Cerrado"},
+        {"estado": "MA", "nome": "Maranhão", "lat": -2.53, "lon": -44.30, "regiao": "Nordeste", "bioma": "Cerrado"},
+        {"estado": "MT", "nome": "Mato Grosso", "lat": -15.59, "lon": -56.09, "regiao": "Centro-Oeste", "bioma": "Cerrado"},
+        {"estado": "MS", "nome": "Mato Grosso do Sul", "lat": -20.44, "lon": -54.64, "regiao": "Centro-Oeste", "bioma": "Pantanal"},
+        {"estado": "MG", "nome": "Minas Gerais", "lat": -19.92, "lon": -43.93, "regiao": "Sudeste", "bioma": "Cerrado"},
+        {"estado": "PA", "nome": "Pará", "lat": -1.45, "lon": -48.50, "regiao": "Norte", "bioma": "Amazônia"},
+        {"estado": "PB", "nome": "Paraíba", "lat": -7.11, "lon": -34.86, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "PR", "nome": "Paraná", "lat": -25.42, "lon": -49.27, "regiao": "Sul", "bioma": "Mata Atlântica"},
+        {"estado": "PE", "nome": "Pernambuco", "lat": -8.04, "lon": -34.87, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "PI", "nome": "Piauí", "lat": -5.08, "lon": -42.80, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "RJ", "nome": "Rio de Janeiro", "lat": -22.90, "lon": -43.20, "regiao": "Sudeste", "bioma": "Mata Atlântica"},
+        {"estado": "RN", "nome": "Rio Grande do Norte", "lat": -5.79, "lon": -35.20, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "RS", "nome": "Rio Grande do Sul", "lat": -30.03, "lon": -51.23, "regiao": "Sul", "bioma": "Pampa"},
+        {"estado": "RO", "nome": "Rondônia", "lat": -8.76, "lon": -63.90, "regiao": "Norte", "bioma": "Amazônia"},
+        {"estado": "RR", "nome": "Roraima", "lat": 2.82, "lon": -60.67, "regiao": "Norte", "bioma": "Amazônia"},
+        {"estado": "SC", "nome": "Santa Catarina", "lat": -27.59, "lon": -48.54, "regiao": "Sul", "bioma": "Mata Atlântica"},
+        {"estado": "SP", "nome": "São Paulo", "lat": -23.55, "lon": -46.63, "regiao": "Sudeste", "bioma": "Mata Atlântica"},
+        {"estado": "SE", "nome": "Sergipe", "lat": -10.94, "lon": -37.07, "regiao": "Nordeste", "bioma": "Caatinga"},
+        {"estado": "TO", "nome": "Tocantins", "lat": -10.21, "lon": -48.36, "regiao": "Norte", "bioma": "Cerrado"},
+    ]
+    
+    for st in estados_brasil:
+        existing = db.query(DimLocalidade).filter(
+            DimLocalidade.municipio == st["nome"],
+            DimLocalidade.estado == st["estado"]
+        ).first()
+        if existing:
+            if not existing.latitude_ref:
+                existing.latitude_ref = str(st["lat"])
+                existing.longitude_ref = str(st["lon"])
+                existing.pais = "Brasil"
+                existing.continente = "América do Sul"
+                existing.codigo_iso = "BR"
+        else:
+            loc = DimLocalidade(
+                municipio=st["nome"],
+                estado=st["estado"],
+                uf=st["estado"],
+                regiao=st["regiao"],
+                bioma=st["bioma"],
+                pais="Brasil",
+                continente="América do Sul",
+                latitude_ref=str(st["lat"]),
+                longitude_ref=str(st["lon"]),
+                codigo_iso="BR"
+            )
+            db.add(loc)
+    db.commit()
 
     if data is None:
         data = date.today() - timedelta(days=1)
