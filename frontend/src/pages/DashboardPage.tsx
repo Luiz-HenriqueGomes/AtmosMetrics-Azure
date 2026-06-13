@@ -19,9 +19,19 @@ const formatLocationName = (str: string | null) => {
 
 // Utilitário para pegar o nome correto a exibir (Município se Brasil, caso contrário País)
 const getLocationLabel = (item: any) => {
-  const isValidCity = item.municipio !== null && item.pais === 'Brasil' && !item.municipio.startsWith('Grid');
-  const name = isValidCity ? item.municipio : item.pais;
-  return formatLocationName(name);
+  // Se for um foco de calor do INPE ou uma localidade brasileira válida
+  if (item.municipio && !item.municipio.startsWith('Grid')) {
+    // Se tiver estado (INPE retorna), mostra 'Cidade - UF'
+    if (item.estado && item.estado.length === 2) {
+      return formatLocationName(item.municipio) + ' - ' + item.estado.toUpperCase();
+    }
+    return formatLocationName(item.municipio);
+  }
+  // Se for uma localidade global (tem país)
+  if (item.pais) {
+    return formatLocationName(item.pais);
+  }
+  return 'Local Desconhecido';
 };
 
 // Componente auxiliar para controlar o mapa dinamicamente
