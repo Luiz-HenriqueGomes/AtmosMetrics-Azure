@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
