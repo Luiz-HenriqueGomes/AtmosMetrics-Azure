@@ -38,3 +38,11 @@ logs/
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
+
+# --- Dependências Python instaladas (geradas pelo CI) ---
+backend/.python_packages/
+backend/python_packages/
+
+# --- Build do frontend compilado (gerado pelo CI) ---
+backend/app/static/
+
