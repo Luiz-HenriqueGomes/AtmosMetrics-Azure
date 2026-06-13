@@ -12,6 +12,7 @@ from app.database import Base
 
 class FatoAnomaliaTermica(Base):
     __tablename__ = "fato_anomalia_termica"
+    __mapper_args__ = {"implicit_returning": False}
 
     id_anomalia     = Column(BigInteger, primary_key=True, autoincrement=True)
 
